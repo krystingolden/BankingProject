@@ -14,7 +14,7 @@ public class Main {
         bank.loadAccountsFromFile();
 
         //Continually prompt the user for their pin until a valid pin is entered
-        while (!(bank.promptForPin())) {
+        while (!(bank.promptForExistingPin())) {
             System.out.println("There are no client accounts with that pin.");
         }
 
@@ -35,6 +35,7 @@ public class Main {
             userOption = menu.getUserOption(accessLevel);
         }
 
+        menu.saveToFile();
         System.out.println();
         System.out.println("Thank you for choosing the bank of java! Good-bye!");
 

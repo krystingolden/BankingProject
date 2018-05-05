@@ -7,25 +7,23 @@ public class Menu {
 
     private Bank bank;
 
-    public Menu (Bank bank){
+    public Menu(Bank bank) {
         this.bank = bank;
     }
 
     public void displayMenu(String accessLevel) {
 
         System.out.println();
-        System.out.println("1) Transfer funds");
-        System.out.println("2) Withdraw funds");
-        System.out.println("3) Deposit funds");
-        System.out.println("4) View account information");
-        if (accessLevel.equalsIgnoreCase("Admin")){
+        System.out.println("1) Transfer funds between your accounts");
+        System.out.println("2) Withdraw funds from your account");
+        System.out.println("3) Deposit funds to your account");
+        System.out.println("4) View your account information");
+        if (accessLevel.equalsIgnoreCase("Admin")) {
             System.out.println("5) Add a client");
             System.out.println("6) Remove a client");
             System.out.println("7) Edit a client");
-            System.out.println("8) Open an account");
-            System.out.println("9) Close an account");
-            System.out.println("10) Sort the account records");
-            System.out.println("11) Search for clients/administrators");
+            System.out.println("8) Sort the account records");
+            System.out.println("9) View a client");
         }
         System.out.println("0) Quit");
         System.out.println();
@@ -39,10 +37,9 @@ public class Menu {
 
         //Determine the max choices available to the user based on their access level
         int maxChoices;
-        if (accessLevel.equalsIgnoreCase("Admin")){
+        if (accessLevel.equalsIgnoreCase("Admin")) {
             maxChoices = adminOptions;
-        }
-        else{
+        } else {
             maxChoices = clientOptions;
         }
 
@@ -72,135 +69,95 @@ public class Menu {
         switch (userOption) {
             //Option 1 = transfer funds
             case 1:
-                //Set accountType to represent both accounts (Checking and Savings)
-                int accountType = 0;
-                //Set the transaction type
+                String fromOrTo = "From";
                 String transactionType = "Transfer";
-                //If both accounts exist
-                if (bank.confirmCheckingSavingsExist(accountType)) {
-                    //Set action to be "From" an account
-                    String fromOrTo = "From";
-                    //Determine on which account the action will be performed based on user prompt
-                    accountType = bank.determineFromOrToAccount(fromOrTo);
-                    //Determine the amount to be used during the transaction based on user prompt
-                    double transferAmount = bank.getAmountToProcess(accountType);
-                    //If the request is valid based on current account balance
-                    if(transferAmount > 0.0){
-                        //Process the transfer on the specified account using the specified amount
-                        bank.processTransaction(accountType, transferAmount, transactionType);
-                        System.out.println("Transfer successfully processed.");
-                    }
-                    //Otherwise warn user
-                    else {
-                        System.out.println("This transfer request cannot be processed.");
-                    }
-                }
-                //Otherwise warn user
-                else {
-                    System.out.println("You must have both checking and savings accounts in order to process a transfer.");
-                }
+                sendForProcessingOrMessage(fromOrTo, transactionType);
                 break;
             //Option 2 = withdraw funds
             case 2:
-                //Set action to be "From" an account
-                String fromOrTo = "From";
-                //Determine on which account the action will be performed based on user prompt
-                accountType = bank.determineFromOrToAccount(fromOrTo);
-                //Set the transaction type
+                fromOrTo = "From";
                 transactionType = "Withdrawal";
-                //If the account to be withdrawn from exists
-                if (bank.confirmCheckingSavingsExist(accountType)) {
-                    //Determine the amount to be used during the transaction based on user prompt
-                    double withdrawalAmount = bank.getAmountToProcess(accountType);
-                    //If the request is valid based on current account balance
-                    if(withdrawalAmount > 0.0){
-                        //Process the withdrawal on the specified account using the specified amount
-                        bank.processTransaction(accountType, withdrawalAmount, transactionType);
-                        System.out.println("Withdrawal successfully processed.");
-                    }
-                    //Otherwise warn user
-                    else {
-                        System.out.println("This withdrawal request cannot be processed.");
-                    }
-                }
-                //Otherwise warn user
-                else {
-                    if (accountType == 1){
-                        System.out.println("You do not have a checking account.");
-                    }
-                    else{
-                        System.out.println("You do not have a savings account.");
-                    }
-                }
+                sendForProcessingOrMessage(fromOrTo, transactionType);
                 break;
             //Option 3 = deposit funds
             case 3:
-                //Set action to be "To" an account
                 fromOrTo = "To";
-                //Determine on which account the action will be performed based on user prompt
-                accountType = bank.determineFromOrToAccount(fromOrTo);
-                //Set the transaction type
                 transactionType = "Deposit";
-                //If the account to be deposited to exists
-                if (bank.confirmCheckingSavingsExist(accountType)) {
-                    //Determine the amount to be used during the transaction based on user prompt
-                    double depositAmount = bank.getAmountToProcess(accountType);
-                    //If the request is valid (not requesting a deposit of 'nothing')
-                    if(depositAmount > 0.0){
-                        //Process the deposit on the specified account using the specified amount
-                        bank.processTransaction(accountType, depositAmount, transactionType);
-                        System.out.println("Deposit successfully processed.");
-                    }
-                    //Otherwise warn user
-                    else {
-                        System.out.println("You cannot deposit 'nothing'.");
-                    }
-                }
-                //Otherwise warn user
-                else {
-                    if (accountType == 1){
-                        System.out.println("You do not have a checking account.");
-                    }
-                    else{
-                        System.out.println("You do not have a savings account.");
-                    }
-                }
+                sendForProcessingOrMessage(fromOrTo, transactionType);
                 break;
             //Option 4 = view account information
             case 4:
-
+                String viewScope = "Single";
+                bank.displayAccountInformation(viewScope);
                 break;
             //Option 5 = add a client
             case 5:
-
+                bank.addClient();
                 break;
             //Option 6 = remove a client
             case 6:
-
+                bank.removeClient();
                 break;
             //Option 7 = edit a client
             case 7:
-
+                bank.editClient();
                 break;
-            //Option 8 = open an account
+            //Option 8 = sort the account records
             case 8:
-
+                System.out.println("These are the clients prior to sorting");
+                viewScope = "All";
+                bank.displayAccountInformation(viewScope);
+                bank.sortTheAccounts();
+                bank.displayAccountInformation(viewScope);
                 break;
-            //Option 9 = close an account
+            //Option 9 = search for a client
             case 9:
-
-                break;
-            //Option 10 = sort the account records
-            case 10:
-
-                break;
-            //Option 11 = search for clients/administrators
-            case 11:
-
+                viewScope = "AdminSingle";
+                bank.displayAccountInformation(viewScope);
                 break;
             default:
                 System.out.println("An error occurred");
                 break;
+        }
+    }
+
+    public void saveToFile() throws Exception {
+        bank.saveAccountsToFile();
+    }
+
+    public void sendForProcessingOrMessage(String fromOrTo, String transactionType) {
+        int accountType;
+        //Determine which account should be confirmed to exist
+        if (transactionType.equalsIgnoreCase("Transfer")) {
+            accountType = 0;
+        } else {
+            accountType = bank.determineFromOrToAccount(fromOrTo);
+        }
+        //If the account exists, determine the amount to be used during the transaction based on user prompt
+        //If the request is valid (not requesting a transaction with 'nothing'),
+        //process the deposit on the specified account using the specified amount
+        //otherwise give message to warn user
+        if (bank.confirmCheckingSavingsExist(accountType)) {
+
+            if (transactionType.equalsIgnoreCase("Transfer")) {
+                accountType = bank.determineFromOrToAccount(fromOrTo);
+            }
+
+            double amount = bank.sendForAmountToProcess(accountType);
+            if (amount > 0.0) {
+                bank.sendForProcessing(accountType, amount, transactionType);
+                System.out.println(transactionType + " successfully processed.");
+            } else {
+                System.out.println("This transaction cannot be processed.");
+            }
+        } else {
+            if (transactionType.equalsIgnoreCase("Transfer")) {
+                System.out.println("You must have both checking and savings accounts in order to process a transfer.");
+            } else if (accountType == 1) {
+                System.out.println("You do not have a checking account.");
+            } else {
+                System.out.println("You do not have a savings account.");
+            }
         }
     }
 }

@@ -1,15 +1,15 @@
-1,Matt,1,1000,1,10000,User
-2,Mark,1,5000,0,0,Admin
-3,Sarah,0,0,1,2500,User
-4,Jennifer,0,0,1,0,Admin
-5,Johnathan,1,4750,1,6000,User
-6,Jacob,1,1000,1,4525,User
-7,Adam,0,0,1,50000,User
-8,Xeavier,1,22222,0,0,User
-9,Stella,1,1500,1,1500,User
-10,Delia,1,2700,1,0,User
-11,Bryanna,1,0,0,0,Admin
-12,Natalie,0,0,0,0,User
-13,Chris,0,0,0,0,Admin
-14,Andrea,1,2550,1,6750,User
-15,Paul,0,0,1,17000,User
+1,  Matt,  1,  1000.0,  1,  10000.0,  User
+2,  Mark,  1,  5000.0,  0,  0.0,  Admin
+3,  Sarah,  0,  0.0,  1,  2500.0,  User
+4,  Jenny,  0,  0.0,  1,  0.0,  Admin
+5,  Johnathan,  1,  4750.0,  1,  6000.0,  User
+6,  Jacob,  1,  1000.0,  1,  4525.0,  User
+7,  Adam,  0,  0.0,  1,  50000.0,  User
+8,  Xeavier,  1,  22222.0,  0,  0.0,  User
+9,  Stella,  1,  1500.0,  1,  1500.0,  User
+10,  Delia,  1,  2700.0,  1,  0.0,  User
+11,  Bryanna,  1,  0.0,  0,  0.0,  Admin
+12,  Natalie,  0,  0.0,  0,  0.0,  User
+13,  Chris,  0,  0.0,  0,  0.0,  Admin
+14,  Andrea,  1,  2550.0,  1,  6750.0,  User
+15,  Paul,  0,  0.0,  1,  17000.0,  User
